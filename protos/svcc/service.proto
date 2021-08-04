@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package rpc.svcc;
+
+option go_package = "rpc/svcc";
+
+service CService {
+  rpc CallServiceC(GetServiceCRequest) returns (GetServiceCResponse);
+}
+
+message GetServiceCRequest {
+    int64 count = 1;
+}
+
+message GetServiceCResponse {
+  repeated ServiceCResponse responses = 1;
+}
+
+message ServiceCResponse {
+    string service_name = 1;
+    string status = 2;
+}

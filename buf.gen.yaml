@@ -1,0 +1,8 @@
+version: v1beta1
+plugins:
+  - name: go
+    out: protopbs
+    opt: paths=source_relative
+  - name: twirp
+    out: protopbs
+    opt: paths=source_relative
