@@ -6,3 +6,5 @@ plugins:
   - name: twirp
     out: protopbs
     opt: paths=source_relative
+  - name: twirp_swagger
+    out: .

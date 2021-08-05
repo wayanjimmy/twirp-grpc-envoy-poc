@@ -19,10 +19,12 @@ func (svc *svcC) CallServiceC(ctx context.Context, req *svcc.GetServiceCRequest)
 		err  error
 	)
 	var responses []*svcc.ServiceCResponse
-	responses = append(responses, &svcc.ServiceCResponse{
-		ServiceName: "C",
-		Status:      "Ok",
-	})
+	for i := int64(1); i <= req.Count; i++ {
+		responses = append(responses, &svcc.ServiceCResponse{
+			ServiceName: "C",
+			Status:      "Ok",
+		})
+	}
 	resp.Responses = responses
 	return &resp, err
 }
