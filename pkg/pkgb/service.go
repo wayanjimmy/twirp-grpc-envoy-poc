@@ -20,8 +20,8 @@ type svcB struct {
 
 func NewSvcB() svcb.BService {
 	return &svcB{
-		clientC: svcc.NewCServiceProtobufClient("http://localhost:3003", &http.Client{
-			//Transport: transport2(),
+		clientC: svcc.NewCServiceProtobufClient("https://localhost:3003", &http.Client{
+			Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
 	}
 }

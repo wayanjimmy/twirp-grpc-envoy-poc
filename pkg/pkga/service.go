@@ -22,11 +22,11 @@ type svcA struct {
 
 func NewSvcA() svca.AService {
 	return &svcA{
-		clientB: svcb.NewBServiceProtobufClient("http://localhost:3002", &http.Client{
-			//	Transport: transport2(),
+		clientB: svcb.NewBServiceProtobufClient("https://localhost:3002", &http.Client{
+			Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
-		clientC: svcc.NewCServiceProtobufClient("http://localhost:3003", &http.Client{
-			//Transport: transport2(),
+		clientC: svcc.NewCServiceProtobufClient("https://localhost:3003", &http.Client{
+			Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
 	}
 }
