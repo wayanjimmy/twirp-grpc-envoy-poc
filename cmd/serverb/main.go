@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -23,13 +21,13 @@ func main() {
 		Addr:         ":3002",
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		TLSConfig:    tlsConfig(),
-		ConnState:    cw.OnStateChange,
+		// TLSConfig:    tlsConfig(),
+		ConnState: cw.OnStateChange,
 	}
 	httpServer.Handler = serviceHandler
 	go func() {
-		err := httpServer.ListenAndServeTLS("../../server.crt", "../../server.key")
-		//	err := httpServer.ListenAndServe()
+		//err := httpServer.ListenAndServeTLS("../../server.crt", "../../server.key")
+		err := httpServer.ListenAndServe()
 		if err != nil {
 			os.Exit(-1)
 		}
@@ -63,24 +61,24 @@ func (cw *ConnectionWatcher) Count() int {
 
 }
 
-func tlsConfig() *tls.Config {
-	crt, err := ioutil.ReadFile("../../server.crt")
-	if err != nil {
-		log.Fatal(err)
-	}
+// func tlsConfig() *tls.Config {
+// 	crt, err := ioutil.ReadFile("../../server.crt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	key, err := ioutil.ReadFile("../../server.key")
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	key, err := ioutil.ReadFile("../../server.key")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	cert, err := tls.X509KeyPair(crt, key)
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	cert, err := tls.X509KeyPair(crt, key)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	return &tls.Config{
-		Certificates: []tls.Certificate{cert},
-		ServerName:   "localhost",
-	}
-}
+// 	return &tls.Config{
+// 		Certificates: []tls.Certificate{cert},
+// 		ServerName:   "localhost",
+// 	}
+// }

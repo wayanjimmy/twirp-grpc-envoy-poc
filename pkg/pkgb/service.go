@@ -2,16 +2,11 @@ package pkgb
 
 import (
 	"context"
-	"crypto/tls"
-	"crypto/x509"
-	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/kyawmyintthein/twirp-grpc-envoy-poc/protopbs/protos/svcb"
 	"github.com/kyawmyintthein/twirp-grpc-envoy-poc/protopbs/protos/svcc"
 	"github.com/twitchtv/twirp"
-	"golang.org/x/net/http2"
 )
 
 type svcB struct {
@@ -20,8 +15,8 @@ type svcB struct {
 
 func NewSvcB() svcb.BService {
 	return &svcB{
-		clientC: svcc.NewCServiceProtobufClient("https://localhost:3003", &http.Client{
-			Transport: transport2(),
+		clientC: svcc.NewCServiceProtobufClient("http://localhost:3003", &http.Client{
+			//	Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
 	}
 }
@@ -52,26 +47,26 @@ func (svc *svcB) CallServiceB(ctx context.Context, req *svcb.GetServiceBRequest)
 	return &resp, err
 }
 
-func transport2() *http2.Transport {
-	return &http2.Transport{
-		TLSClientConfig:    tlsConfig(),
-		DisableCompression: true,
-		AllowHTTP:          false,
-	}
-}
+// func transport2() *http2.Transport {
+// 	return &http2.Transport{
+// 		TLSClientConfig:    tlsConfig(),
+// 		DisableCompression: true,
+// 		AllowHTTP:          false,
+// 	}
+// }
 
-func tlsConfig() *tls.Config {
-	crt, err := ioutil.ReadFile("../../server.crt")
-	if err != nil {
-		log.Fatal(err)
-	}
+// func tlsConfig() *tls.Config {
+// 	crt, err := ioutil.ReadFile("../../server.crt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	rootCAs := x509.NewCertPool()
-	rootCAs.AppendCertsFromPEM(crt)
+// 	rootCAs := x509.NewCertPool()
+// 	rootCAs.AppendCertsFromPEM(crt)
 
-	return &tls.Config{
-		RootCAs:            rootCAs,
-		InsecureSkipVerify: false,
-		ServerName:         "localhost",
-	}
-}
+// 	return &tls.Config{
+// 		RootCAs:            rootCAs,
+// 		InsecureSkipVerify: false,
+// 		ServerName:         "localhost",
+// 	}
+// }

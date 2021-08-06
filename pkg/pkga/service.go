@@ -2,17 +2,12 @@ package pkga
 
 import (
 	"context"
-	"crypto/tls"
-	"crypto/x509"
-	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/kyawmyintthein/twirp-grpc-envoy-poc/protopbs/protos/svca"
 	"github.com/kyawmyintthein/twirp-grpc-envoy-poc/protopbs/protos/svcb"
 	"github.com/kyawmyintthein/twirp-grpc-envoy-poc/protopbs/protos/svcc"
 	"github.com/twitchtv/twirp"
-	"golang.org/x/net/http2"
 )
 
 type svcA struct {
@@ -22,11 +17,11 @@ type svcA struct {
 
 func NewSvcA() svca.AService {
 	return &svcA{
-		clientB: svcb.NewBServiceProtobufClient("https://localhost:3002", &http.Client{
-			Transport: transport2(),
+		clientB: svcb.NewBServiceProtobufClient("http://localhost:3002", &http.Client{
+			//		Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
-		clientC: svcc.NewCServiceProtobufClient("https://localhost:3003", &http.Client{
-			Transport: transport2(),
+		clientC: svcc.NewCServiceProtobufClient("http://localhost:3003", &http.Client{
+			//	Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
 	}
 }
@@ -69,26 +64,26 @@ func (svc *svcA) CallServiceA(ctx context.Context, req *svca.GetServiceARequest)
 	return &resp, err
 }
 
-func transport2() *http2.Transport {
-	return &http2.Transport{
-		TLSClientConfig:    tlsConfig(),
-		DisableCompression: true,
-		AllowHTTP:          false,
-	}
-}
+// func transport2() *http2.Transport {
+// 	return &http2.Transport{
+// 		TLSClientConfig:    tlsConfig(),
+// 		DisableCompression: true,
+// 		AllowHTTP:          false,
+// 	}
+// }
 
-func tlsConfig() *tls.Config {
-	crt, err := ioutil.ReadFile("../../server.crt")
-	if err != nil {
-		log.Fatal(err)
-	}
+// func tlsConfig() *tls.Config {
+// 	crt, err := ioutil.ReadFile("../../server.crt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	rootCAs := x509.NewCertPool()
-	rootCAs.AppendCertsFromPEM(crt)
+// 	rootCAs := x509.NewCertPool()
+// 	rootCAs.AppendCertsFromPEM(crt)
 
-	return &tls.Config{
-		RootCAs:            rootCAs,
-		InsecureSkipVerify: false,
-		ServerName:         "localhost",
-	}
-}
+// 	return &tls.Config{
+// 		RootCAs:            rootCAs,
+// 		InsecureSkipVerify: false,
+// 		ServerName:         "localhost",
+// 	}
+// }
