@@ -18,7 +18,7 @@ func main() {
 	serviceAHandler := svca.NewAServiceServer(pkga.NewSvcA(),
 		twirp.WithServerPathPrefix("/rz"))
 	httpServer := &http.Server{
-		Addr:         ":3001",
+		Addr:         ":8081",
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		// TLSConfig:    tlsConfig(),
@@ -33,7 +33,7 @@ func main() {
 		}
 	}()
 
-	log.Println("Server A started at port :3001")
+	log.Println("Server A started at port :8081")
 	select {}
 }
 

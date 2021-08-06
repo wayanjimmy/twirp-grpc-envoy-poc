@@ -18,7 +18,7 @@ func main() {
 	serviceHandler := svcc.NewCServiceServer(pkgc.NewSvcC(),
 		twirp.WithServerPathPrefix("/rz"))
 	httpServer := &http.Server{
-		Addr:         ":3003",
+		Addr:         ":8083",
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		//TLSConfig:    tlsConfig(),
@@ -33,7 +33,7 @@ func main() {
 		}
 	}()
 
-	log.Println("Server C started at port :3003")
+	log.Println("Server C started at port :8083")
 	select {}
 }
 

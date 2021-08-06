@@ -18,7 +18,7 @@ func main() {
 	serviceHandler := svcb.NewBServiceServer(pkgb.NewSvcB(),
 		twirp.WithServerPathPrefix("/rz"))
 	httpServer := &http.Server{
-		Addr:         ":3002",
+		Addr:         ":8082",
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		// TLSConfig:    tlsConfig(),
@@ -33,7 +33,7 @@ func main() {
 		}
 	}()
 
-	log.Println("Server B started at port :3002")
+	log.Println("Server B started at port :8082")
 	select {}
 }
 

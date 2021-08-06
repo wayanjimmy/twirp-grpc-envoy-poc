@@ -15,7 +15,7 @@ type svcB struct {
 
 func NewSvcB() svcb.BService {
 	return &svcB{
-		clientC: svcc.NewCServiceProtobufClient("http://localhost:3003", &http.Client{
+		clientC: svcc.NewCServiceProtobufClient("http://0.0.0.0:8083", &http.Client{
 			//	Transport: transport2(),
 		}, twirp.WithClientPathPrefix("/rz")),
 	}
