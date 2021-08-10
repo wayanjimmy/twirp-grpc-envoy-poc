@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+  backend_server_a:
+    build:
+      context: .
+      dockerfile: Dockerfile.aserver
+    networks:
+      - envoymesh
+    expose:
+      - "8081"
+    ports:
+      - "8081:8081"
+      
+  backend_a_envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile.aenvoy
+    volumes:
+      - ./a.envoy.yaml:/tmp/envoy/a.envoy.yaml
+    networks:
+      - envoymesh
+    expose:
+      - "8000"
+      - "8001"
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+  
+  backend_server_b:
+    build:
+      context: .
+      dockerfile: Dockerfile.bserver
+    networks:
+      - envoymesh
+    expose:
+      - "8082"
+    ports:
+      - "8082:8082"
+
+  backend_b_envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile.benvoy
+    volumes:
+      - ./b.envoy.yaml:/tmp/envoy/b.envoy.yaml
+    networks:
+      - envoymesh
+    expose:
+      - "8010"
+      - "8011"
+    ports:
+      - "8010:8010"
+      - "8011:8011"
+networks:
+  envoymesh: {}
